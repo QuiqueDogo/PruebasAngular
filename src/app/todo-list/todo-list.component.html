@@ -1,0 +1,21 @@
+<ul>
+    @for (item of tasks; track item.id) {
+        <li>
+            <span>{{ item.title }}</span>
+            @if(item.completed){
+                <span>&#10003;</span>
+            }
+            @else{
+                <span>&#10005;</span>
+            }
+            <span>{{$index + "-" + item.id}}</span>
+            <span (click)="eraseTask(item.id)">🧺</span>
+            <span (click)="completedTask(item.id)">✔</span>
+        </li>
+    }
+</ul>
+<div class="d-flex">
+    <p>Nueva Tarea: </p>
+    <input type="text" [(ngModel)]="taskTitle" >
+    <button type="text" (click)="updateTitle(taskTitle)">Agregar Nueva Tarea</button>
+</div>
