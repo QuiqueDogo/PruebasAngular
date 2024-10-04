@@ -8,7 +8,7 @@
             @else{
                 <span>&#10005;</span>
             }
-            <span>{{$index + "-" + item.id}}</span>
+            <span>{{item.completed ? 'Cerrado' : 'Abierto'}}</span>
             <span (click)="eraseTask(item.id)">🧺</span>
             <span (click)="completedTask(item.id)">✔</span>
         </li>

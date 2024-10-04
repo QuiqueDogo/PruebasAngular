@@ -29,5 +29,6 @@ export class TodoListComponent {
       completed: false
     }
     this.tasks = [...this.tasks, newTask];
+    this.taskTitle = '';
   }
 }
