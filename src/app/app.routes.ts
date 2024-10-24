@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { ApiConsumeComponent } from './api-consume/api-consume.component';
+import { TodoListComponent } from './components/todo-list/todo-list.component';
+import { ApiConsumeComponent } from './views/api-consume/api-consume.component';
 
 
 export const routes: Routes = [

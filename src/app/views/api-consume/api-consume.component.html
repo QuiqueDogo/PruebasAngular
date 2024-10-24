@@ -1,0 +1,6 @@
+@if(joke.length > 0) {
+    @for(element of joke; track element.name ){
+        <app-card-pok [valueNew]="element.url" [name]="element.name"/>
+    }
+
+}

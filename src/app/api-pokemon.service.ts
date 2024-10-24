@@ -4,14 +4,13 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class ApiPokemonService {
-  
-  constructor() { 
-  
-  }
 
   getAllPokemon() {
-    return axios.get('https://pokeapi.co/api/v2/pokemon/', {
-    
+    return axios.get('https://pokeapi.co/api/v2/pokemon/', {   
+    });
+  }
+  getUniquePokemon(element:any) {
+    return axios.get(`${element}`, {   
     });
   }
   
