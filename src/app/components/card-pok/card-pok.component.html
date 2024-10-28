@@ -2,45 +2,33 @@
     <div class='main'>
       <div class='background-circle'>
         <div class='image'>
-            <img [src]="elements?.sprites?.front_default ?? elements?.sprites?.other['official-artwork']?.front_default" class="pokemon" alt='imagen' /> 
-            <!-- <img ref={hiddenPok} class='pokemon' src={infoPokemon.sprites?.front_default ?? infoPokemon.sprites.other["official-artwork"].front_default} alt="" />
-            <img ref={showPok} class='pokeball' src={imgPokeball} alt="" /> -->
+            <img [className]="captureAnimation" [src]="elements?.sprites?.front_default ?? elements?.sprites?.other['official-artwork']?.front_default" class="pokemon" alt='imagen' /> 
+            <img [className]="pokeballAnimation" class='pokeball' contain ngSrc="/img/pokeball.png" alt="pokeball" width="60" height="60" /> 
         </div>
       </div>
     </div>
     <div class='info'>
           <div class='subinfo'>
-            <!-- <p>{props.name}</p> -->
+            <p>{{ elements.name }}</p>
           <div class='containerHp'>
-              <div  class='HP'></div>
+              <div [style]="{'width':HPP, 'background':colorHP, 'border-color': borderHP}" class='HP'></div>
           </div>
           </div>
           <div class='subinfo2'>
-          <!-- <p>PH: {`${hpokemon} / ${infoPokemon.stats[0].base_stat}`}</p> -->
+          <p>PH:{{ hpokemon + "/" + baseStat }}</p>
           </div>
       </div>
       <div class='options'>
         <button
+        (click)="capturePok()"
          class='division'>
             Capturar
         </button>
-        <button 
+        <button
+        (click)="attack()"
         class='division2'>
             Atacar
         </button>
     </div>
-    <!-- <div className='options'>
-        <button
-        ref={btnAttack} 
-        onClick={Capture}
-         className='division'>
-            Capturar
-        </button>
-        <button 
-        onClick={attack} 
-        className='division2'>
-            Atacar
-        </button>
-    </div> -->
 </div>
 
