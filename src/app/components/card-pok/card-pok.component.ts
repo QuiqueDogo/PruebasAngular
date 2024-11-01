@@ -1,13 +1,17 @@
 import { Component, inject, Input } from '@angular/core';
 import { ApiPokemonService } from '../../api-pokemon.service';
 import { NgOptimizedImage } from '@angular/common';
-
+// import { ComponentStore } from '@ngrx/component-store';
+interface PokemonState {
+  pokemons: (object | void)[];
+}
 @Component({
   selector: 'app-card-pok',
   standalone: true,
   imports: [NgOptimizedImage],
   templateUrl: './card-pok.component.html',
-  styleUrl: './card-pok.component.css'
+  styleUrl: './card-pok.component.css',
+  // providers: [ComponentStore]
 })
 export class CardPokComponent {
   elements:any = [];
@@ -19,11 +23,23 @@ export class CardPokComponent {
   pokeballAnimation:string ='pokeball';
   baseStat:string ='';
   pokemonPNG:string = '../../../img/pokeball.png';
+
+  // constructor(
+  //   private  componentStore: ComponentStore<PokemonState>
+    
+
+  // ) {}
   
   private apiService = inject(ApiPokemonService)
+
   @Input() valueNew:any = [];
   @Input() name:string = '';
   ngOnInit(): void {
+    // this.componentStore.setState((state) => {
+    //   return {
+    //     ...state,
+    //   };
+    // });
     this.apiService.getUniquePokemon(this.valueNew)
     .then(({data}) => {
       this.elements = data
@@ -61,7 +77,7 @@ export class CardPokComponent {
     }
   }
 
-  capturePok(){
+  capturePok(infoPokemon:any){
     let  subHP = this.calHP(this.hpokemon);
     if(subHP < 26){
       this.captureAnimation = 'pokemon magic';
@@ -74,6 +90,12 @@ export class CardPokComponent {
         // setinfo([...info,infoPokemon])
         // btnAttack.current.setAttribute('disabled','')
       }, 800);
+      // this.componentStore.setState((state) => {
+      //   return {
+      //     ...state,
+      //     pokemons: infoPokemon ,
+      //   };
+      // });
     }
   }
 
