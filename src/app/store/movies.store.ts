@@ -1,45 +1,62 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from '@ngrx/component-store';
-import { catchError, EMPTY, switchMap, tap } from "rxjs";
+import { catchError, concatMap, EMPTY, Observable, switchMap, tap } from "rxjs";
 import { PokemonService } from "../services/pokemons.service";
 
+interface PokemonList {
 
+}
  interface MoviesState {
-  pokemons: (object | void)[];
+  pokemons: object ;
 }
  interface Movie {
   movie: string;
 }
 
 @Injectable()
-export class PokemonState extends ComponentStore<MoviesState> {
+export class PokemonState extends ComponentStore<any> {
 
   constructor(
     private pokemonService: PokemonService
     
   ) {
     super({ pokemons: [] });
+    this.fetchPokemons();
   }
-  readonly addPokemon = this.updater((state, movie) => ({
-    pokemons: [...state.pokemons, movie],
+
+  readonly setPokemons = this.updater((state, pokemons: any) => ({
+    ...state,
+    pokemons,
   }));
 
-  // readonly setContacts = this.updater((state, pokemon: any) => ({
-  //   ...state,
-  //   pokemon,
-  // }));
 
+  readonly fetchPokemons = this.effect((trigger$) =>
+    trigger$.pipe(
+      switchMap(() =>
+        this.pokemonService.fetchPokemon().pipe(
+          tap((pokemons: any) => {
+            this.setPokemons(pokemons);
+          }),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+  showPokemons$ = this.select(() => ['auqi'])
 
-  // readonly fetchPokemons = this.effect((trigger$) =>
-  //   trigger$.pipe(
-  //     switchMap(() =>
-  //       this.pokemonService.fetchPokemon().pipe(
-  //         tap((contacts: any) => {
-  //           this.addPokemon(contacts);
-  //         }),
-  //         catchError(() => EMPTY)
-  //       )
-  //     )
-  //   )
+  readonly addPokemon = this.effect((contact$: Observable<Object>) =>
+    contact$.pipe(
+      concatMap((contact) =>
+        this.pokemonService.addPokemon(contact).pipe(
+          tap(() => this.fetchPokemons()),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
+  // readonly showPokemons$: Observable<Object> = this.select(
+  //   ( pokemons) => pokemons
   // );
+  
 }

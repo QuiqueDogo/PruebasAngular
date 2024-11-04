@@ -1,8 +1,9 @@
 import { Component, inject, Input } from '@angular/core';
 import { ApiPokemonService } from '../../api-pokemon.service';
 import { NgOptimizedImage } from '@angular/common';
+import { PokemonState } from '../../store/movies.store';
 // import { ComponentStore } from '@ngrx/component-store';
-interface PokemonState {
+interface PokemonState2 {
   pokemons: (object | void)[];
 }
 @Component({
@@ -24,11 +25,11 @@ export class CardPokComponent {
   baseStat:string ='';
   pokemonPNG:string = '../../../img/pokeball.png';
 
-  // constructor(
-  //   private  componentStore: ComponentStore<PokemonState>
+  constructor(
+    private  pokemonState: PokemonState
     
 
-  // ) {}
+  ) {}
   
   private apiService = inject(ApiPokemonService)
 
@@ -83,6 +84,7 @@ export class CardPokComponent {
       this.captureAnimation = 'pokemon magic';
       setTimeout(() => {
         this.pokeballAnimation = 'pokeball pokeballshow'
+        this.pokemonState.addPokemon(infoPokemon);
         // showPok.current.style.animation = 'BouncesPokeball';
         // showPok.current.style.animationDuration = "0.5s";
         // showPok.current.style.animationFillMode = "forwards";

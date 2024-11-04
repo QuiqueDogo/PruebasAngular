@@ -1,0 +1,5 @@
+<p>pokemon-list works!{{ pokemons$ }}</p>
+
+@for(element of pokemons$; track element.name ){
+    <p>{{element?.id}}</p>
+}
